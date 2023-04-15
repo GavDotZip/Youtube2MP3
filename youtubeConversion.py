@@ -2,13 +2,15 @@ from pytube import YouTube
 import os
 
 # Take in URL from YouTube.com to be converted to MP3
-yt = YouTube(str(input("Enter URL of youtube video: \n ")))
-video = yt.streams.filter(only_audio=True).first() # Only take audio
+url = YouTube(str(input("Enter URL of youtube video: \n ")))
+video = url.streams.filter(only_audio=True).first()  # Only take audio from YouTube video
 
-print("Enter the destination address (leave blank to save in current directory)")
-destination = str(input(" ")) or '.'
-out_file = video.download(output_path=destination)
-base, ext = os.path.splitext(out_file)
-new_file = base + '.mp3'
-os.rename(out_file, new_file)
-print(yt.title + " has been successfully downloaded.")
+print("Select a Folder:  (leave blank to save in current directory)")
+folder = str(input(" ")) or '.'
+
+# Save file to selected folder
+out = video.download(output_path=folder)
+base, ext = os.path.splitext(out)
+mp3File = base + '.mp3'
+os.rename(out, mp3File)
+print(url.title + " download complete.")
